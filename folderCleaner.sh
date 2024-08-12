@@ -18,23 +18,35 @@ pwd
 # larger than 2mb, or delete everytihing in the directory
 ls -lhS
 echo ""
-echo "1. Delete files smaller than 2MB"\n 
-echo "2. Delete files larger than 2MB"\n 
+echo "1. Delete files smaller than 2MB"
+echo "2. Delete files larger than 2MB"
 echo "3. Delete all files"
-echo "These files are smaller than 2MB in size."
 read -p "Which option would you like to apply to this directory?: " option
 echo ""
 
 # Based on the user's selection, choose what happens :)
 if [ "$option" == '1' ]; then
-    find ~/$folder -type f -size +2M
+    find ~/$folder -type f -size -2M
     echo ""
     read -p "Are you sure you want to delete these files? (Y/n) " response
     if [ "$response" == 'Y' ] || [ "$response" == 'y' ]; then
         echo "You chose to delete the selected files"
-        find ~/$folder -type f -size +2M -delete
+        find ~/$folder -type f -size -2M -delete
+        find ~/$folder -type d -empty -exec rmdir {} \;
         echo "Complete! All files smaller than 2MB have been deleted."
     else
-        echo "You chose not to delete the files"
+        echo "You chose not to delete the files."
+    fi
+elif [ "$option" == '2' ]; then
+    find ~/$folder -type f -size +2M
+    echo ""
+    read -p "Are you sure you want to delete these files? (Y/n) " responseTwo
+    if [ "$responseTwo" == 'Y' ] || [ "$responseTwo" == 'y' ]; then
+        echo "You chose to delete the selected files"
+        find ~/$folder -type f -size +2M -delete
+        find ~/$folder -type d -empty -exec rmdir {} \;
+        echo "Complete! All files larger than 2MB have been deleted."
+    else
+        echo "You chose not to delete the files."
     fi
 fi
