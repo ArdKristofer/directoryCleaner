@@ -49,4 +49,8 @@ elif [ "$option" == '2' ]; then
     else
         echo "You chose not to delete the files."
     fi
+elif [ "$option" == 3 ]; then
+    cd ~/$folder 
+    rm -rf ./*
+    echo "Complete! The directory has been completely wiped!"
 fi
